@@ -1,0 +1,26 @@
+# Archivos de variables de entorno (contiene secretos)
+.env
+
+# Dependencias (se reinstalan con npm install)
+node_modules/
+
+# Archivos de log (si los generas en el futuro)
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Archivos de configuración del entorno de desarrollo integrado (IDE)
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de compilación (si usaras TypeScript o similar en el futuro)
+dist/
+build/

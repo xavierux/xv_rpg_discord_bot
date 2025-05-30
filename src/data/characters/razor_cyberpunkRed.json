@@ -1,0 +1,41 @@
+{
+  "name": "Razor",
+  "system": "cyberpunkRed",
+  "attributes": {
+    "inteligencia_cp": 6,
+    "reflejos": 8,
+    "destreza_cp": 7,
+    "tecnica": 5,
+    "cool": 7,
+    "voluntad": 6,
+    "movimiento": 4,
+    "cuerpo": 5,
+    "empatia": 4,
+    "suerte": 5
+  },
+  "skills": {
+    "disparar": 6,
+    "percepcion_cp": 4,
+    "pelea": 3,
+    "evasion": 5
+  },
+  "hp": {
+    "current": 35,
+    "max": 35
+  },
+  "armor": {
+    "head_sp": 10,
+    "body_sp": 10
+  },
+  "EV": 12, 
+  "inventory": {
+    "equippedWeapon": "pistolaPesada"
+  },
+  "weapons": {
+    "pistolaPesada": {
+      "name": "Pistola Pesada",
+      "damage": "3d6",
+      "skill": "disparar"
+    }
+  }
+}

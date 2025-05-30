@@ -1,0 +1,35 @@
+{
+  "name": "Garra",
+  "system": "dnd5e",
+  "class": "mago",
+  "level": 3,
+  "proficiencyBonus": 2,
+  "attributes": {
+    "fuerza": 10,
+    "destreza": 14,
+    "constitucion": 12,
+    "inteligencia": 17,
+    "sabiduria": 15,
+    "carisma": 8
+  },
+  "skills_proficiency": {
+    "percepcion": false,
+    "arcana": true,
+    "investigacion": true
+  },
+  "hp": {
+    "current": 22,
+    "max": 22
+  },
+  "CA": 12,
+  "inventory": {
+    "equippedWeapon": "baculo"
+  },
+  "weapons": {
+    "baculo": {
+      "name": "Báculo",
+      "damage": "1d6",
+      "properties": ["versatil (1d8)"]
+    }
+  }
+}

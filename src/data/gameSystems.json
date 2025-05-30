@@ -1,0 +1,70 @@
+{
+  "dnd5e": {
+    "name": "Dungeons & Dragons 5th Edition",
+    "dice": {
+      "primaryCheck": "1d20"
+    },
+    "attributes": ["fuerza", "destreza", "constitucion", "inteligencia", "sabiduria", "carisma"],
+    "attributeModifierFormula": "(score - 10) / 2",
+    "skills": {
+      "atletismo": "fuerza",
+      "acrobacias": "destreza",
+      "juego_de_manos": "destreza",
+      "sigilo": "destreza",
+      "arcana": "inteligencia",
+      "historia": "inteligencia",
+      "investigacion": "inteligencia",
+      "naturaleza": "inteligencia",
+      "religion": "inteligencia",
+      "trato_con_animales": "sabiduria",
+      "medicina": "sabiduria",
+      "percepcion": "sabiduria",
+      "perspicacia": "sabiduria",
+      "supervivencia": "sabiduria",
+      "engaño": "carisma",
+      "intimidacion": "carisma",
+      "interpretacion": "carisma",
+      "persuasion": "carisma"
+    },
+    "combat": {
+      "attackBonusLogic": "dnd5e_attack",
+      "defenseStatName": "CA",
+      "damageLogic": "direct_to_hp"
+    }
+  },
+  "cyberpunkRed": {
+    "name": "Cyberpunk RED",
+    "dice": {
+      "primaryCheck": "1d10"
+    },
+    "attributes": ["inteligencia_cp", "reflejos", "destreza_cp", "tecnica", "cool", "voluntad", "movimiento", "cuerpo", "empatia", "suerte"],
+    "attributeModifierFormula": "score_is_modifier",
+    "skills": {
+      "concentracion": "voluntad",
+      "percepcion_cp": "inteligencia_cp",
+      "atletismo_cp": "destreza_cp",
+      "pelea": "destreza_cp",
+      "sigilo_cp": "destreza_cp",
+      "conducir": "reflejos",
+      "disparar_arma_corta": "reflejos",
+      "disparar_arma_larga": "reflejos",
+      "disparar": "reflejos", 
+      "armas_cuerpo_a_cuerpo": "destreza_cp",
+      "evasion": "destreza_cp",
+      "electronica_seguridad": "tecnica",
+      "primeros_auxilios": "tecnica",
+      "ciencia_callejera": "inteligencia_cp",
+      "soborno": "cool",
+      "interrogatorio": "cool",
+      "persuasion_cp": "cool",
+      "comerciar": "cool",
+      "lenguaje_callejero": "inteligencia_cp"
+    },
+    "combat": {
+      "attackBonusLogic": "cyberpunk_skill_attack",
+      "defenseStatName": "EV",
+      "damageLogic": "sp_then_hp",
+      "armorStatName": "SP"
+    }
+  }
+}
