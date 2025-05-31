@@ -4,6 +4,8 @@ const path = require('path');
 const baseDataPath = path.join(__dirname, '..', 'data');
 const charactersDir = path.join(baseDataPath, 'characters');
 const gameSystemsPath = path.join(baseDataPath, 'gameSystems.json');
+const serverSettingsPath = path.join(baseDataPath, 'serverSettings.json');
+
 
 // Asegurarse de que el directorio de personajes exista
 async function ensureCharactersDirExists() {
@@ -68,8 +70,47 @@ async function saveCharacter(characterData) {
   }
 }
 
+async function ensureFileExists(filePath, defaultContent = '{}') {
+    try {
+        await fs.access(filePath);
+    } catch (error) {
+        if (error.code === 'ENOENT') {
+            console.log(`Archivo ${filePath} no encontrado, creándolo con contenido por defecto...`);
+            await fs.writeFile(filePath, defaultContent, 'utf8');
+        } else {
+            throw error;
+        }
+    }
+}
+
+async function loadServerSettings() {
+  await ensureFileExists(serverSettingsPath); // Asegurar que el archivo exista
+  try {
+    const data = await fs.readFile(serverSettingsPath, 'utf8');
+    return JSON.parse(data);
+  } catch (error) {
+    console.error(`Error cargando ${serverSettingsPath}:`, error);
+    return {}; // Retorna un objeto vacío en caso de error
+  }
+}
+
+async function saveServerSettings(settingsData) {
+  try {
+    await fs.writeFile(serverSettingsPath, JSON.stringify(settingsData, null, 2), 'utf8');
+    console.log(`Configuración de servidor guardada en: ${serverSettingsPath}`);
+    return true;
+  } catch (error) {
+    console.error(`Error guardando configuración de servidor en ${serverSettingsPath}:`, error);
+    return false;
+  }
+}
+
+
+// Asegúrate de exportar las nuevas funciones
 module.exports = {
   loadGameSystems,
   loadCharacter,
   saveCharacter,
+  loadServerSettings,
+  saveServerSettings
 };

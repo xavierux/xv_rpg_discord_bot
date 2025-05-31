@@ -3,24 +3,46 @@ const { SlashCommandBuilder, REST, Routes } = require('discord.js');
 const fs = require('node:fs');
 const path = require('node:path');
 
-const commands = [];
-// Cargar comandos dinámicamente para asegurar que se registran los mismos que usa el bot
-const commandsPath = path.join(__dirname, 'commands', 'generales'); // Ajusta si tienes más subdirectorios
-
+// Cargar gameSystems.json para generar opciones dinámicas
+let gameSystemsData = {};
+const gameSystemsPath = path.join(__dirname, 'data', 'gameSystems.json'); // Ajusta la ruta a tu gameSystems.json
 try {
-    const commandFiles = fs.readdirSync(commandsPath).filter(file => file.endsWith('.js'));
-
-    for (const file of commandFiles) {
-        const command = require(path.join(commandsPath, file));
-        if (command.data) {
-            commands.push(command.data.toJSON());
-            console.log(`Comando preparado para despliegue: ${command.data.name}`);
-        }
-    }
+    const rawData = fs.readFileSync(gameSystemsPath, 'utf8');
+    gameSystemsData = JSON.parse(rawData);
 } catch (error) {
-    console.error('Error al leer el directorio de comandos para el despliegue:', error);
+    console.error('Error al cargar gameSystems.json para el despliegue de comandos:', error);
+    // Podrías decidir terminar el proceso o continuar sin opciones dinámicas para setsystem
 }
 
+const commands = [];
+const commandFolders = fs.readdirSync(path.join(__dirname, 'commands'));
+
+for (const folder of commandFolders) {
+    const commandFiles = fs.readdirSync(path.join(__dirname, 'commands', folder)).filter(file => file.endsWith('.js'));
+    for (const file of commandFiles) {
+        const commandModule = require(path.join(__dirname, 'commands', folder, file));
+        if (commandModule.data) {
+            let commandData = commandModule.data;
+
+            // Personalización para el comando /setsystem
+            if (commandData.name === 'setsystem') {
+                const systemOption = commandData.options.find(opt => opt.name === 'sistema');
+                if (systemOption && Object.keys(gameSystemsData).length > 0) {
+                    const choices = Object.keys(gameSystemsData).map(key => ({
+                        name: gameSystemsData[key].name || key, // Usar el nombre del sistema o la clave como fallback
+                        value: key
+                    }));
+                    systemOption.choices = choices; // Asignar las choices dinámicas
+                }
+            }
+            
+            commands.push(commandData.toJSON());
+            console.log(`Comando preparado para despliegue: ${commandData.name}`);
+        } else {
+            console.log(`[ADVERTENCIA] Al comando ${path.join(__dirname, 'commands', folder, file)} le falta una propiedad "data".`);
+        }
+    }
+}
 
 const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
 
@@ -32,7 +54,6 @@ const rest = new REST({ version: '10' }).setToken(process.env.DISCORD_TOKEN);
     }
     console.log(`Registrando ${commands.length} comandos slash...`);
 
-    // El ID de aplicación (cliente) de tu bot
     await rest.put(
       Routes.applicationCommands(process.env.CLIENT_ID),
       { body: commands },
