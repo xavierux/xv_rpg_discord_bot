@@ -6,6 +6,7 @@
     "activeSystem": "cyberpunkRed"
   },
   "1369019268724691087": {
-    "activeSystem": "cyberpunkRed"
+    "activeSystem": "dnd5e",
+    "diceStyle": "polyhedral_RdD_default"
   }
 }

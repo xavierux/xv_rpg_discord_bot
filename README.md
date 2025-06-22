@@ -7,7 +7,7 @@ Un bot de Discord versátil diseñado para facilitar la gestión de partidas de 
 * **Soporte Multisistema:** Configurado inicialmente para D&D 5e y Cyberpunk RED a través de un archivo `gameSystems.json`.
 * **Gestión de Personajes:** Los personajes se almacenan como archivos JSON individuales, permitiendo una fácil visualización y modificación.
 * **Comandos Slash:** Interfaz moderna y fácil de usar dentro de Discord.
-    * `/check`: Realiza tiradas de atributo o habilidad para un personaje específico y sistema.
+    * `/tirada`: Realiza tiradas de atributo o habilidad para un personaje específico y sistema.
 * **Modularidad:** Diseñado para ser fácilmente configurable y extensible.
 * **Tirador de Dados Integrado:** Soporta formatos de dados como `1d20`, `2d6+3`, etc.
 
@@ -81,7 +81,7 @@ Los personajes se almacenan como archivos `.json` individuales dentro del direct
 
 Actualmente, el comando principal implementado es:
 
-* **`/check`**: Realiza una tirada de atributo o habilidad.
+* **`/tirada`**: Realiza una tirada de atributo o habilidad.
     * **Opciones:**
         * `personaje`: Nombre del personaje (tal como aparece en el nombre de su archivo JSON, sin la extensión ni el sistema).
         * `sistema`: El sistema de juego a usar (ej: `dnd5e`, `cyberpunkRed`).
@@ -89,8 +89,8 @@ Actualmente, el comando principal implementado es:
 
     * **Ejemplo:**
         ```
-        /check personaje:Garra sistema:D&D 5e tirada:arcana
-        /check personaje:Razor sistema:Cyberpunk RED tirada:disparar
+        /tirada personaje:Garra sistema:D&D 5e tirada:arcana
+        /tirada personaje:Razor sistema:Cyberpunk RED tirada:disparar
         ```
 
 ## Estructura del Proyecto (Resumen)
@@ -98,7 +98,7 @@ Actualmente, el comando principal implementado es:
 /tu_proyecto_bot
 ├── src/
 │   ├── commands/       # Lógica de los comandos slash
-│   │   └── generales/  # Comandos generales como /check
+│   │   └── generales/  # Comandos generales como /tirada
 │   ├── data/           # Datos del juego
 │   │   ├── characters/ # Archivos JSON de los personajes
 │   │   └── gameSystems.json # Configuración de los sistemas de juego

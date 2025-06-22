@@ -1,7 +1,7 @@
 {
-  "name": "Garra",
+  "name": "Ethanor",
   "system": "dnd5e",
-  "class": "mago",
+  "class": "ranger",
   "level": 3,
   "proficiencyBonus": 2,
   "attributes": {
@@ -34,5 +34,5 @@
       ]
     }
   },
-  "diceStyle": "polyhedral_3d_grey_and_white"
+  "diceStyle": "polyhedral_RdD_default"
 }
