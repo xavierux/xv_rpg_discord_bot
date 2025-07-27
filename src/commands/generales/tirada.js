@@ -59,9 +59,9 @@ async function handleTiradaAutocomplete(interaction, gameSystemsData, serverSett
         return interaction.respond([{ name: "Datos del sistema no encontrados", value: "error_system_data_missing" }]);
     }
 
-    let choices = [];
+    let allChoices = [];
     if (systemInfo.attributes && Array.isArray(systemInfo.attributes)) {
-        choices = choices.concat(
+        allChoices = allChoices.concat(
             systemInfo.attributes.map(attr => ({ 
                 name: `Atributo: ${attr.charAt(0).toUpperCase() + attr.slice(1)}`, 
                 value: attr
@@ -69,22 +69,33 @@ async function handleTiradaAutocomplete(interaction, gameSystemsData, serverSett
         );
     }
     if (systemInfo.skills && typeof systemInfo.skills === 'object') {
-        choices = choices.concat(
+        allChoices = allChoices.concat(
             Object.keys(systemInfo.skills).map(skillKey => ({ 
                 name: `Habilidad: ${skillKey.charAt(0).toUpperCase() + skillKey.slice(1).replace(/_/g, ' ')}`,
                 value: skillKey
             }))
         );
     }
-    
+        console.log('systemInfo.skills: ' + JSON.stringify(systemInfo.skills, null, 2));
+
+    // Ordenar alfabéticamente todas las opciones
+    allChoices.sort((a, b) => a.name.localeCompare(b.name));
+    console.log('allChoices: ' + JSON.stringify(allChoices, null, 2));
+
+
+    let filteredChoices = [];
     if (focusedValue) {
-        choices = choices.filter(choice => 
+        // Si hay un valor enfocado (el usuario ha escrito algo), filtra
+        filteredChoices = allChoices.filter(choice => 
             choice.name.toLowerCase().includes(focusedValue) || 
             choice.value.toLowerCase().includes(focusedValue)
         );
+    } else {
+        // Si no hay valor enfocado, toma las primeras 25 opciones ordenadas alfabéticamente
+        filteredChoices = allChoices.slice(0, 25);
     }
 
-    await interaction.respond(choices.slice(0, 25));
+    await interaction.respond(filteredChoices.slice(0, 25)); // Asegurarse de enviar solo 25
 }
 
 // --- 3. EXPORTACIÓN DEL MÓDULO DEL COMANDO ---
